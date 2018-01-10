@@ -1,7 +1,10 @@
 package com.example.administrator.myapplication;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +23,69 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).show();
                 //finish(); //销毁活动
+                /*
+                使用显式intent启动活动
+
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                startActivity(intent);*/
+
+                /*
+                使用隐式intent启动活动
+
+                Intent intent = new Intent("com.example.administrator.myapplication.ACTION_START");
+                intent.addCategory("com.example.administrator.myapplication.MY_CATEGORY");
+                startActivity(intent);*/
+
+                /*
+                启动系统浏览器打开百度
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("http://www.baidu.com"));
+                startActivity(intent);*/
+
+                /*
+                使用intent调用拨号界面拨打10086
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:10086"));
+                startActivity(intent);*/
+
+                /*
+                使用intent传递数据
+
+                String data = "Hello SecondActivity";
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                intent.putExtra("extra_data",data);
+                startActivity(intent);*/
+
+                /*
+                数据返回给上一个活动
+                启动
+                接收参数
+                 */
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                startActivityForResult(intent ,1);
+
             }
         });
+    }
+
+    @Override
+    /*
+    接收result的数据
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String returndDara = data.getStringExtra("data_return");
+                    Log.d("MainActivity",returndDara);
+                }
+                break;
+            default:
+        }
     }
 
     @Override
