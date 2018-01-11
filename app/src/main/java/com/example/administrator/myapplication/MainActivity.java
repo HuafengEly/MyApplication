@@ -11,18 +11,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        Log.d("MainActivity启动了","Task id is "+getTaskId());
         setContentView(R.layout.first_layout);  //给当前活动加载一个布局
         Button button1 = (Button) findViewById(R.id.button_1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /*
+                启动活动的最佳写法
+                 */
+                SecondActivity.actionStart(MainActivity.this,"data1","data2");
+
+
                 //Toast.makeText(MainActivity.this,"You clicked Button 1",Toast.LENGTH_SHORT).show();
                 //finish(); //销毁活动
                 /*
@@ -64,10 +71,15 @@ public class MainActivity extends AppCompatActivity {
                 数据返回给上一个活动
                 启动
                 接收参数
-                 */
-                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-                startActivityForResult(intent ,1);
 
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                startActivityForResult(intent ,1);*/
+
+                /*
+                探究活动的启动模式
+
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                startActivity(intent);*/
             }
         });
     }
